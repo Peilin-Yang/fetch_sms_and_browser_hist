@@ -200,7 +200,7 @@ public class FetchSMS extends Activity {
          	 FeedEntry.COLUMN_NAME_TYPE,
 	         FeedEntry.COLUMN_NAME_BODY,
 	         };
-	
+
 	     Cursor c = db.query(
 	         FeedEntry.TABLE_NAME,  // The table to query
 	         projection,                               // The columns to return
@@ -212,6 +212,7 @@ public class FetchSMS extends Activity {
 	         );
 	     
 	     c.moveToFirst();
+
 	     while (!c.isAfterLast()) {
 	    			
          	bh.put("ID: "+c.getLong(0),
@@ -262,7 +263,7 @@ public class FetchSMS extends Activity {
         	TitlesFragment tf = (TitlesFragment) getFragmentManager().findFragmentById(R.id.titles);
         	
         	ArrayList<String> titles = new ArrayList<String>();
-        	
+
         	titles.addAll(result.keySet());
         	
         	Collections.sort(titles, new Comparator<String>() {
@@ -281,12 +282,12 @@ public class FetchSMS extends Activity {
             // Populate list with our static array of titles.
         	tf.setListAdapter(new ArrayAdapter<String>(tf.getActivity(),
                     android.R.layout.simple_list_item_activated_1, titles));
-
+        	
             // Check to see if we have a frame in which to embed the details
             // fragment directly in the containing UI.
             View detailsFrame = tf.getActivity().findViewById(R.id.details);
             tf.mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-            
+
             if (tf.mDualPane) {
                 // In dual-pane mode, the list view highlights the selected item.
             	tf.getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -307,7 +308,7 @@ public class FetchSMS extends Activity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
+            
             if (getResources().getConfiguration().orientation
                     == Configuration.ORIENTATION_LANDSCAPE) {
                 // If the screen is now in landscape mode, we can show the
@@ -339,7 +340,6 @@ public class FetchSMS extends Activity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-			
             if (savedInstanceState != null) {
                 // Restore last state for checked position.
                 mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
@@ -452,7 +452,14 @@ public class FetchSMS extends Activity {
             text.setPadding(padding, padding, padding, padding);
             scroller.addView(text);
             //text.setText(Shakespeare.DIALOGUE[getShownIndex()]);
-            text.setText(Details.DETAILS.get(getShownIndex()));
+            
+            if (Details.DETAILS.size() == 0){
+            	Log.d("onCreateView", "1");
+            }
+            else{
+                text.setText(Details.DETAILS.get(getShownIndex()));            	
+            }
+
             return scroller;
         }
     }

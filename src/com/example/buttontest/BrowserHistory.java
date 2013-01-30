@@ -6,6 +6,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+
+import com.example.buttontest.FetchSMS.Details;
+
 import android.text.format.Time;
 
 import android.app.Activity;
@@ -431,7 +434,13 @@ public class BrowserHistory extends Activity {
             text.setPadding(padding, padding, padding, padding);
             scroller.addView(text);
             //text.setText(Shakespeare.DIALOGUE[getShownIndex()]);
-            text.setText(Details.DETAILS.get(getShownIndex()));
+
+            if (Details.DETAILS.size() == 0){
+            	Log.d("onCreateView", "1");
+            }
+            else{
+                text.setText(Details.DETAILS.get(getShownIndex()));            	
+            }
             return scroller;
         }
     }
